@@ -1,0 +1,23 @@
+{
+  "name": "isneezy/celeiro",
+  "description": "Helps you build your laravel app following pepository pattern ",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ivan Vilanculo",
+      "email": "vilanculoivan@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "illuminate/database": "~5",
+    "illuminate/support": "~5",
+    "illuminate/pagination": "~5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Celeiro\\": "src"
+    }
+  }
+}
