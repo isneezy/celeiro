@@ -19,5 +19,8 @@
     "psr-4": {
       "Isneezy\\Celeiro\\": "src"
     }
+  },
+  "require-dev": {
+    "illuminate/http": "~5"
   }
 }
