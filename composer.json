@@ -22,5 +22,13 @@
   },
   "require-dev": {
     "illuminate/http": "~5"
+  },
+
+  "extra": {
+    "laravel": {
+      "providers" : [
+        "Isneezy\\Celeiro\\CeleiroServiceProvider"
+      ]
+    }
   }
 }
