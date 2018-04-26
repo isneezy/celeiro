@@ -11,8 +11,8 @@ use Isneezy\Celeiro\Filterable\Filterable;
 class CeleiroServiceProvider extends ServiceProvider {
 
 	public function boot() {
-		$resourcesDir = __DIR__ . '../resources';
-		$this->publishes( [ "resourcesDir/config/celeiro.php" => config_path( 'celeiro.php' ) ] );
+		$resourcesDir = __DIR__ . '/../resources';
+		$this->publishes( [ "$resourcesDir/config/celeiro.php" => config_path( 'celeiro.php' ) ] );
 
 		$this->mergeConfigFrom( "$resourcesDir/config/celeiro.php", 'celeiro' );
 	}
