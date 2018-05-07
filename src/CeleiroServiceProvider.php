@@ -3,6 +3,7 @@
 namespace Isneezy\Celeiro;
 
 
+use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Isneezy\Celeiro\Contracts\Filterable as FilterableContract;
@@ -18,9 +19,11 @@ class CeleiroServiceProvider extends ServiceProvider {
 	}
 
 	public function register() {
-		$this->app->bind( FilterableContract::class, function ( Request $request ) {
+		$this->app->bind( FilterableContract::class, function () {
+			$request = Container::getInstance()->make( Request::class );
+
 			return Filterable::builder()
-			                 ->paged( $request->has( 'unpaged', false ) )
+			                 ->paged( ! $request->has( 'unpaged') )
 			                 ->page( $request->get( 'page', 1 ) )
 			                 ->limit( $request->get( 'limit', config( 'cleleiro.limit', 10 ) ) )
 			                 ->search( $request->get( 'q', '' ) )
