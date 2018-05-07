@@ -30,5 +30,11 @@
         "Isneezy\\Celeiro\\CeleiroServiceProvider"
       ]
     }
-  }
+  },
+
+  "config": {
+    "preferred-install": "dist"
+  },
+
+  "minimum-stability": "stable"
 }
