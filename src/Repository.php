@@ -37,7 +37,9 @@ class Repository {
 		}
 
 		if ( true === $filterable->isPaged() ) {
-			return $query->paginate( $filterable->getPageSize() );
+			$paginator = $query->paginate( $filterable->getPageSize() );
+			$paginator->appends(request()->except(['page']));
+			return $paginator;
 		}
 
 		if ( $filterable->getPageSize() > 0) {
