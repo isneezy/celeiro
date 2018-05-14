@@ -40,7 +40,7 @@ class Repository {
 			return $query->paginate( $filterable->getPageSize() );
 		}
 
-		if ( $filterable->getPageSize() > 0 || false != false ) {
+		if ( $filterable->getPageSize() > 0) {
 			return $query->take( $filterable->getPageSize() )->get();
 		}
 

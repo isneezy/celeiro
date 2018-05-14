@@ -25,7 +25,7 @@ class CeleiroServiceProvider extends ServiceProvider {
 			return Filterable::builder()
 			                 ->paged( ! $request->has( 'unpaged') )
 			                 ->page( $request->get( 'page', 1 ) )
-			                 ->limit( $request->get( 'limit', config( 'cleleiro.limit', 10 ) ) )
+			                 ->limit($request->get('limit', config('celeiro.limit')) )
 			                 ->search( $request->get( 'q', '' ) )
 			                 ->toFilterable();
 		} );

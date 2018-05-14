@@ -22,7 +22,7 @@ class Builder {
 	 * @return $this
 	 */
 	public function limit($limit) {
-		$this->params['page'] = $limit;
+		$this->params['limit'] = $limit;
 		return $this;
 	}
 
