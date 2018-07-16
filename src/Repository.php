@@ -62,12 +62,4 @@ class Repository {
 
 		return $model;
 	}
-
-	/**
-	 * @param $model Model
-	 * @param $data array
-	 */
-	protected function setModelData( $model, array $data ) {
-		$model->fill( $data );
-	}
 }
