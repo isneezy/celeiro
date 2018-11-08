@@ -17,11 +17,13 @@
   },
   "autoload": {
     "psr-4": {
-      "Isneezy\\Celeiro\\": "src"
+      "Isneezy\\Celeiro\\": "src",
+      "Isneezy\\Celeiro\\Tests\\": "tests"
     }
   },
   "require-dev": {
-    "illuminate/http": "~5"
+    "illuminate/http": "~5",
+    "orchestra/testbench": "~3.0"
   },
 
   "extra": {
