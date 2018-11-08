@@ -1,6 +1,6 @@
 <?php
 
-namespace Isneezy\Celeiro;
+namespace Isneezy\Celeiro\Provider;
 
 
 use Illuminate\Container\Container;
@@ -9,7 +9,7 @@ use Illuminate\Support\ServiceProvider as Service;
 use Isneezy\Celeiro\Contracts\Filterable as FilterableContract;
 use Isneezy\Celeiro\Filterable\Filterable;
 
-class ServiceProvider extends Service {
+class CeleiroServiceProvider extends Service {
 
 	public function boot() {
 		$this->mergeConfigFrom( __DIR__.'/../resources/config/celeiro.php', 'celeiro');

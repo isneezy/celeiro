@@ -1,6 +1,6 @@
 {
   "name": "isneezy/celeiro",
-  "description": "Helps you build your laravel app following pepository pattern ",
+  "description": "Helps you build your laravel app following repository pattern ",
   "type": "library",
   "license": "MIT",
   "authors": [
@@ -27,7 +27,7 @@
   "extra": {
     "laravel": {
       "providers" : [
-        "Isneezy\\Celeiro\\CeleiroServiceProvider"
+        "Isneezy\\Celeiro\\Provider\\LaravelServiceProvider"
       ]
     }
   }
