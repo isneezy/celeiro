@@ -48,18 +48,4 @@ class Repository {
 
 		return $query->get();
 	}
-
-	/**
-	 * Creates a model with the $data information in it
-	 *
-	 * @param array $data
-	 *
-	 * @return Model
-	 */
-	public function factory( array $data ) {
-		$model = $this->newQuery()->getModel()->newInstance();
-		$this->setModelData( $model, $data );
-
-		return $model;
-	}
 }
