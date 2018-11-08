@@ -38,7 +38,7 @@ class Repository {
 
 		if ( true === $filterable->isPaged() ) {
 			$paginator = $query->paginate( $filterable->getPageSize() );
-			$paginator->appends(request()->except(['page']));
+			$paginator->appends(app('request')->except(['page']));
 			return $paginator;
 		}
 
