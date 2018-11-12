@@ -2,6 +2,9 @@
 
 namespace Isneezy\Celeiro\Operations;
 
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 use Isneezy\Celeiro\Contracts\Filterable;
 
 trait ReadRecords {
@@ -25,9 +28,47 @@ trait ReadRecords {
 		$query = $this->newQuery();
 
 		if ($fail) {
-			$query->findOrFail($id);
+			return $query->findOrFail($id);
 		}
 
 		return $query->find($id);
+	}
+
+	/**
+	 * @param $column string | array
+	 * @param $value string | null
+	 * @param bool $fail
+	 *
+	 * @return Model
+	 */
+	public function findBy($column, $value = null, $fail = true) {
+		$query = $this->newQuery();
+		if (is_array($column)) {
+			$query->where($column);
+		} else {
+			$query->where($column, $value);
+		}
+
+		if ($fail) {
+			return $query->firstOrFail();
+		}
+		return $query->first();
+	}
+
+	/**
+	 * @param $column string | array
+	 * @param $value string | null
+	 * @param Filterable $filterable
+	 *
+	 * @return Collection | LengthAwarePaginator
+	 */
+	public function findManyBy($column, $value = null, Filterable $filterable) {
+		$query = $this->newQuery();
+		if (is_array($column)) {
+			$query->where($column);
+		} else {
+			$query->where($column, $value);
+		}
+		return $this->doQuery($query, $filterable);
 	}
 }

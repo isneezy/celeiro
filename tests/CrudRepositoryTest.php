@@ -42,15 +42,40 @@ class CrudRepositoryTest extends TestCase {
 		self::assertEquals('Ivan', $this->repository->findByID(1)->name);
 	}
 
-	public function test_update () {
+	public function test_it_can_update () {
 		$model = $this->repository->create(['name' => 'Ivan']);
 		$this->repository->update($model, ['name' => 'Ivan Vilanculo']);
 		$this->assertDatabaseHas('tests', ['name' => 'Ivan Vilanculo']);
 	}
 
-	public function test_delete () {
+	public function test_it_can_delete () {
 		$model = $this->repository->create(['name' => 'Ivan']);
 		$this->repository->delete($model->id);
 		$this->assertDatabaseMissing('tests', ['name' => 'Ivan']);
+	}
+
+	public function test_it_can_find_one_by_any_column () {
+		$this->repository->create(['name' => 'Ivan']);
+		$this->repository->create(['name' => 'Ivan2']);
+		$model = $this->repository->findBy('name', 'Ivan');
+		self::assertNotNull($model);
+		self::assertEquals($model->getAttribute('name'), 'Ivan');
+
+		$model = $this->repository->findBy(['name' => 'Ivan']);
+		self::assertNotNull($model);
+		self::assertEquals($model->getAttribute('name'), 'Ivan');
+	}
+
+	public function test_it_can_find_many_by_any_column () {
+		$this->repository->create(['name' => 'Ivan']);
+		$this->repository->create(['name' => 'Ivan']);
+		$this->repository->create(['name' => 'Ivan2']);
+		$filterable = \Isneezy\Celeiro\Filterable\Filterable::builder()->toFilterable();
+
+		$model = $this->repository->findManyBy('name','Ivan', $filterable);
+		self::assertNotNull($model->count(), 2);
+
+		$model = $this->repository->findManyBy(['name' => 'Ivan'], null, $filterable);
+		self::assertNotNull($model->count(), 2);
 	}
 }
