@@ -48,6 +48,12 @@ interface IFilterable {
 	public function getSearchParam();
 
 	/**
+	 * Returns an array of relations that should be eager loaded
+	 * @return array
+	 */
+	public function getInclude();
+
+	/**
 	 * Returns param defined in key or default if it does not extist and all params array if $key is null
 	 * @param $key
 	 * @param $default

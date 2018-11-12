@@ -3,6 +3,8 @@
 namespace Isneezy\Celeiro\Operations;
 
 
+use Isneezy\Celeiro\Contracts\IFilterable;
+
 trait DeleteRecords {
 	/**
 	 * Performs the delete command model
@@ -11,7 +13,7 @@ trait DeleteRecords {
 	 * @return bool
 	 */
 	public function delete($id){
-		$model = $this->findByID($id);
+		$model = $this->findByID($id, app(IFilterable::class));
 		return $model->delete();
 	}
 }

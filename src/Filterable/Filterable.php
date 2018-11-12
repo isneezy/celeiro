@@ -88,4 +88,11 @@ class Filterable implements FilterableContract {
 			                 ->limit($request->get('limit', config('celeiro.limit')) )
 			                 ->search( $request->get( 'q', '' ) )
 	 */
+	/**
+	 * Returns an array of relations that should be eager loaded
+	 * @return array
+	 */
+	public function getInclude() {
+		return array_filter(explode(',', array_get($this->params, 'include')));
+	}
 }

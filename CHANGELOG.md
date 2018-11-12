@@ -8,8 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Ability to get request parameters
 - Ability to create Filterable from request and from Filterable itself
+- Feature to Eager load Relations from requests
 ### Changed
 - Renamed Builder class into FilterableFactory
+- Every read operation signature now require Filterable instance
 
 ## [1.2.0] - 2018-11-12
 ### Added

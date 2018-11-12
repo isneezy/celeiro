@@ -4,6 +4,7 @@ namespace Isneezy\Celeiro\Filterable;
 
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Isneezy\Celeiro\Contracts\IFilterable;
 
 class FilterableFactory {
@@ -76,6 +77,24 @@ class FilterableFactory {
 	public function search( $q ) {
 		$this->params['q'] = $q;
 
+		return $this;
+	}
+
+	/**
+	 * @param $include array | string
+	 * @param bool $override
+	 *
+	 * @return FilterableFactory
+	 */
+	public function include ($include, $override = false) {
+		$oldInclude = explode(',', Arr::get($this->params, 'include', null));
+		if (is_string($include)) {
+			$include = explode(',', $include);
+		}
+		if (!$override) {
+			$include = array_merge($oldInclude, $include);
+		}
+		$this->params['include'] = implode(',', array_filter(array_unique($include)));
 		return $this;
 	}
 

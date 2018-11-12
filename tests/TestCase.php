@@ -15,9 +15,15 @@ class TestCase extends \Orchestra\Testbench\TestCase {
 			$table->increments('id');
 			$table->string('name');
 		});
+		Schema::create('test_relations', function (Blueprint $table) {
+			$table->increments('id');
+			$table->string('name');
+			$table->string('model_id');
+		});
 	}
 
 	protected function tearDown() {
+		Schema::drop('test_relations');
 		Schema::drop('tests');
 		parent::tearDown();
 	}

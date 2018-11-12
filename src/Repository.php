@@ -29,24 +29,37 @@ abstract class Repository implements IRepository {
 	 * @param Builder | \Illuminate\Database\Query\Builder $query
 	 * @param IFilterable $filterable
 	 *
-	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
+	 * @param bool $first
+	 *
+	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]| Model
 	 */
 
-	protected function doQuery( $query, $filterable) {
+	protected function doQuery( $query, $filterable, $first = false ) {
 		if ( is_null( $query ) ) {
 			$query = $this->newQuery();
 		}
 
+		$this->loadRelations($query, $filterable);
+
+		if ($first) {
+			return $query->first();
+		}
+
 		if ( true === $filterable->isPaged() ) {
 			$paginator = $query->paginate( $filterable->getPageSize() );
-			$paginator->appends(app('request')->except(['page']));
+			$paginator->appends( app( 'request' )->except( [ 'page' ] ) );
+
 			return $paginator;
 		}
 
-		if ( $filterable->getPageSize() > 0) {
+		if ( $filterable->getPageSize() > 0 ) {
 			return $query->take( $filterable->getPageSize() )->get();
 		}
 
 		return $query->get();
+	}
+
+	protected function loadRelations(Builder $query, IFilterable $filterable) {
+		return $query->with($filterable->getInclude());
 	}
 }

@@ -2,11 +2,9 @@
 
 namespace Isneezy\Celeiro\Tests;
 
-
-use Illuminate\Support\Facades\DB;
-use Isneezy\Celeiro\Contracts\IFilterable;
 use Isneezy\Celeiro\CrudRepository;
 use Isneezy\Celeiro\Filterable\FilterableFactory;
+use Isneezy\Celeiro\Tests\Models\TestModel;
 
 class CrudRepositoryTest extends TestCase {
 	/** @var CrudRepository */
@@ -40,7 +38,7 @@ class CrudRepositoryTest extends TestCase {
 			['name' => 'Adelino'],
 			['name' => 'Edgencio'],
 		]);
-		self::assertEquals('Ivan', $this->repository->findByID(1)->name);
+		self::assertEquals('Ivan', $this->repository->findByID(1,  FilterableFactory::fromRequest()->make())->name);
 	}
 
 	public function test_it_can_update () {
@@ -58,11 +56,11 @@ class CrudRepositoryTest extends TestCase {
 	public function test_it_can_find_one_by_any_column () {
 		$this->repository->create(['name' => 'Ivan']);
 		$this->repository->create(['name' => 'Ivan2']);
-		$model = $this->repository->findBy('name', 'Ivan');
+		$model = $this->repository->findBy('name', 'Ivan', FilterableFactory::fromRequest()->make());
 		self::assertNotNull($model);
 		self::assertEquals($model->getAttribute('name'), 'Ivan');
 
-		$model = $this->repository->findBy(['name' => 'Ivan']);
+		$model = $this->repository->findBy(['name' => 'Ivan'],null, FilterableFactory::fromRequest()->make());
 		self::assertNotNull($model);
 		self::assertEquals($model->getAttribute('name'), 'Ivan');
 	}

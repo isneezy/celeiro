@@ -4,14 +4,18 @@ namespace Isneezy\Celeiro\Tests;
 
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Isneezy\Celeiro\Filterable\Filterable;
 use Isneezy\Celeiro\Filterable\FilterableFactory;
 use Isneezy\Celeiro\Repository;
+use Isneezy\Celeiro\Tests\Models\TestModel;
+use Isneezy\Celeiro\Tests\Models\TestRelationModel;
 
 class RepositoryTest extends TestCase {
 	/** @var \ReflectionClass */
 	private $reflection;
+	private $doQuery;
 
 	/**
 	 * @throws \ReflectionException
@@ -19,6 +23,8 @@ class RepositoryTest extends TestCase {
 	protected function setUp() {
 		parent::setUp();
 		$this->makeRepository();
+		$this->doQuery = $this->reflection->getMethod('doQuery');
+		$this->doQuery->setAccessible(true);
 	}
 
 	/**
@@ -52,9 +58,19 @@ class RepositoryTest extends TestCase {
 	public function test_it_can_execute_query() {
 		$repository = $this->makeRepository();
 		$filterable = FilterableFactory::fromRequest()->make();
-		$method = $this->reflection->getMethod('doQuery');
-		$method->setAccessible(true);
-		$result = $method->invokeArgs($repository, [$repository->newQuery(), $filterable]);
+		$result = $this->doQuery->invokeArgs($repository, [$repository->newQuery(), $filterable]);
 		self::assertInstanceOf(LengthAwarePaginator::class, $result);
+	}
+
+	/**
+	 * @throws \ReflectionException
+	 */
+	public function test_it_can_include_relations () {
+		TestModel::insert(['name' => 'Ivan']);
+		TestRelationModel::insert(['name' => 'Ivan\'s Test Relation', 'model_id' => 1]);
+		$repository = $this->makeRepository();
+		$filterable = FilterableFactory::fromRequest()->include(['test_relation'])->make();
+		$result = $this->doQuery->invokeArgs($repository, [$repository->newQuery(), $filterable]);
+		self::assertTrue($result->first()->relationLoaded('test_relation'), 'Failed to assert that test_relation was loaded');
 	}
 }

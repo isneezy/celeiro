@@ -6,6 +6,7 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Isneezy\Celeiro\Contracts\IFilterable;
+use Isneezy\Celeiro\Filterable\Filterable;
 
 trait ReadRecords {
 	/**
@@ -20,37 +21,32 @@ trait ReadRecords {
 	/**
 	 * Retrieves a record by its id
 	 * If $fail is true, a ModelNotFoundException is throwed
+	 *
 	 * @param $id
-	 * @param bool $fail
+	 * @param IFilterable $filterable
+	 *
 	 * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
 	 */
-	public function findByID($id, $fail = true) {
+	public function findByID($id, IFilterable $filterable) {
 		$query = $this->newQuery();
-
-		if ($fail) {
-			return $query->findOrFail($id);
-		}
-
+		$query = $this->loadRelations($query, $filterable);
 		return $query->find($id);
 	}
 
 	/**
 	 * @param $column string | array
 	 * @param $value string | null
-	 * @param bool $fail
+	 * @param Filterable $filterable
 	 *
 	 * @return Model
 	 */
-	public function findBy($column, $value = null, $fail = true) {
+	public function findBy($column, $value = null, Filterable $filterable) {
 		$query = $this->newQuery();
+		$query = $this->loadRelations($query, $filterable);
 		if (is_array($column)) {
 			$query->where($column);
 		} else {
 			$query->where($column, $value);
-		}
-
-		if ($fail) {
-			return $query->firstOrFail();
 		}
 		return $query->first();
 	}
@@ -64,6 +60,7 @@ trait ReadRecords {
 	 */
 	public function findManyBy($column, $value = null, IFilterable $filterable) {
 		$query = $this->newQuery();
+		$query = $this->loadRelations($query, $filterable);
 		if (is_array($column)) {
 			$query->where($column);
 		} else {
