@@ -13,7 +13,7 @@ class BuilderTest extends TestCase {
 
 	public function test_page () {
 		$filterable = $this->makeBuilder()->page(40)->toFilterable();
-		self::assertEquals(40, $filterable->pageNumber());
+		self::assertEquals(40, $filterable->getPage());
 	}
 
 	public function test_limit () {

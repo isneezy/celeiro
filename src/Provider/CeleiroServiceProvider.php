@@ -6,7 +6,7 @@ namespace Isneezy\Celeiro\Provider;
 use Illuminate\Container\Container;
 use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider as Service;
-use Isneezy\Celeiro\Contracts\Filterable as FilterableContract;
+use Isneezy\Celeiro\Contracts\IFilterable as FilterableContract;
 use Isneezy\Celeiro\Filterable\Filterable;
 
 class CeleiroServiceProvider extends Service {

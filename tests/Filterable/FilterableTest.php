@@ -26,7 +26,7 @@ class FilterableTest extends TestCase {
 	public function test_setParams () {
 		$filtrable = $this->makeFilterable();
 		$filtrable->setParams($this->params);
-		self::assertEquals(10, $filtrable->pageNumber());
+		self::assertEquals(10, $filtrable->getPage());
 		self::assertEquals(12, $filtrable->getPageSize());
 		self::assertTrue($filtrable->isPaged());
 		self::assertEquals('hello', $filtrable->getSearchParam());
@@ -36,13 +36,13 @@ class FilterableTest extends TestCase {
 		$filterable = $this->makeFilterable();
 		$filterable->setParam('page', 12);
 		$filterable->setParam('limit', 45);
-		self::assertEquals(12, $filterable->pageNumber());
+		self::assertEquals(12, $filterable->getPage());
 		self::assertEquals(45, $filterable->getPageSize());
 	}
 
 	public function test_pageNumber () {
 		$this->filterable->setParams($this->params);
-		self::assertEquals(10, $this->filterable->pageNumber());
+		self::assertEquals(10, $this->filterable->getPage());
 	}
 
 	public function test_pageSize () {

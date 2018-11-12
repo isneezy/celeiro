@@ -25,7 +25,8 @@ class RepositoryTest extends TestCase {
 	 * @throws \ReflectionException
 	 */
 	public function makeRepository() {
-		$repository = new Repository();
+		/** @var Repository $repository */
+		$repository = $this->getMockBuilder(Repository::class)->getMockForAbstractClass();
 		$this->reflection = new \ReflectionClass($repository);
 
 		$modelClass = $this->reflection->getProperty('modelClass');

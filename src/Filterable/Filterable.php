@@ -4,7 +4,7 @@ namespace Isneezy\Celeiro\Filterable;
 
 
 use Illuminate\Support\Arr;
-use Isneezy\Celeiro\Contracts\Filterable as FilterableContract;
+use Isneezy\Celeiro\Contracts\IFilterable as FilterableContract;
 
 class Filterable implements FilterableContract {
 
@@ -22,7 +22,7 @@ class Filterable implements FilterableContract {
 	 * Returns the page to be returned.
 	 * @return int
 	 */
-	public function pageNumber() {
+	public function getPage() {
 		return Arr::get($this->params, 'page', 1);
 	}
 
@@ -39,7 +39,7 @@ class Filterable implements FilterableContract {
 	 * @return int
 	 */
 	public function getOffSet() {
-		return ( $this->pageNumber() - 1 ) * $this->getPageSize();
+		return ( $this->getPage() - 1 ) * $this->getPageSize();
 	}
 
 	/**

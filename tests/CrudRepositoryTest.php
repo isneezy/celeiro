@@ -4,7 +4,7 @@ namespace Isneezy\Celeiro\Tests;
 
 
 use Illuminate\Support\Facades\DB;
-use Isneezy\Celeiro\Contracts\Filterable;
+use Isneezy\Celeiro\Contracts\IFilterable;
 use Isneezy\Celeiro\CrudRepository;
 
 class CrudRepositoryTest extends TestCase {

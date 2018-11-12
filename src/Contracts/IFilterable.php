@@ -3,12 +3,12 @@
 namespace Isneezy\Celeiro\Contracts;
 
 
-interface Filterable {
+interface IFilterable {
 	/**
 	 * Returns the page to be returned.
 	 * @return int
 	 */
-	public function pageNumber();
+	public function getPage();
 
 	/**
 	 * Returns the number of items to be returned.

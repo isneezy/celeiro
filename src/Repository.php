@@ -4,11 +4,12 @@ namespace Isneezy\Celeiro;
 
 
 use Illuminate\Container\Container;
-use Isneezy\Celeiro\Contracts\Filterable;
+use Isneezy\Celeiro\Contracts\IFilterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Isneezy\Celeiro\Contracts\IRepository;
 
-class Repository {
+abstract class Repository implements IRepository {
 
 	/**
 	 * The model class for this repo.
@@ -26,7 +27,7 @@ class Repository {
 
 	/**
 	 * @param Builder | \Illuminate\Database\Query\Builder $query
-	 * @param Filterable $filterable
+	 * @param IFilterable $filterable
 	 *
 	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]
 	 */
