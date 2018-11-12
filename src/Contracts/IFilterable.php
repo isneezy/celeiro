@@ -62,6 +62,11 @@ interface IFilterable {
 	 */
 	public function get($key = null, $default = null);
 
+	/**
+	 * @return array
+	 */
+	public function getOrder();
+
 //	/**
 //	 * Returns filters for the query
 //	 * @return Filters

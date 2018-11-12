@@ -95,4 +95,11 @@ class Filterable implements FilterableContract {
 	public function getInclude() {
 		return array_filter(explode(',', array_get($this->params, 'include')));
 	}
+
+	/**
+	 * @return array
+	 */
+	public function getOrder() {
+		return explode(',', Arr::get($this->params, 'order'));
+	}
 }

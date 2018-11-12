@@ -104,4 +104,9 @@ class FilterableFactory {
 
 		return $filterable;
 	}
+
+	public function order( $column, $direction ) {
+		$this->params['order'] = "$column,$direction";
+		return $this;
+	}
 }

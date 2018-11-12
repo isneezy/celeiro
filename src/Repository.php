@@ -4,6 +4,7 @@ namespace Isneezy\Celeiro;
 
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Arr;
 use Isneezy\Celeiro\Contracts\IFilterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -40,6 +41,7 @@ abstract class Repository implements IRepository {
 		}
 
 		$this->loadRelations($query, $filterable);
+		$this->orderResults($query, $filterable->getOrder());
 
 		if ($first) {
 			return $query->first();
@@ -61,5 +63,12 @@ abstract class Repository implements IRepository {
 
 	protected function loadRelations(Builder $query, IFilterable $filterable) {
 		return $query->with($filterable->getInclude());
+	}
+
+	private function orderResults(Builder $query, array $order) {
+		if (count($order)) {
+			$query->orderBy(Arr::get($order, 0), Arr::get($order, 1, 'ASC'));
+		}
+		return $query;
 	}
 }

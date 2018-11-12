@@ -73,4 +73,18 @@ class RepositoryTest extends TestCase {
 		$result = $this->doQuery->invokeArgs($repository, [$repository->newQuery(), $filterable]);
 		self::assertTrue($result->first()->relationLoaded('test_relation'), 'Failed to assert that test_relation was loaded');
 	}
+
+	/**
+	 * @throws \ReflectionException
+	 */
+	public function test_it_order_results () {
+		TestModel::insert(['name' => 'Ivan']);
+		TestModel::insert(['name' => 'Ivan 2']);
+		TestModel::insert(['name' => 'Ivan 3']);
+
+		$repository = $this->makeRepository();
+		$filterable = FilterableFactory::fromRequest()->order('id', 'DESC')->make();
+		$result = $this->doQuery->invokeArgs($repository, [$repository->newQuery(), $filterable]);
+		self::assertEquals(3, $result->first()->id);
+	}
 }
