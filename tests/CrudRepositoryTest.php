@@ -6,6 +6,7 @@ namespace Isneezy\Celeiro\Tests;
 use Illuminate\Support\Facades\DB;
 use Isneezy\Celeiro\Contracts\IFilterable;
 use Isneezy\Celeiro\CrudRepository;
+use Isneezy\Celeiro\Filterable\FilterableFactory;
 
 class CrudRepositoryTest extends TestCase {
 	/** @var CrudRepository */
@@ -28,7 +29,7 @@ class CrudRepositoryTest extends TestCase {
 	public function test_it_can_find_all () {
 		$this->repository->create(['name' => 'John Doe']);
 		$this->repository->create(['name' => 'John HERN']);
-		$filterable = \Isneezy\Celeiro\Filterable\Filterable::builder()->paged(false)->limit(0)->toFilterable();
+		$filterable = FilterableFactory::fromRequest()->paged(false)->limit(0)->make();
 		$res = $this->repository->findAll($filterable);
 		self::assertEquals(2, $res->count());
 	}
@@ -70,7 +71,7 @@ class CrudRepositoryTest extends TestCase {
 		$this->repository->create(['name' => 'Ivan']);
 		$this->repository->create(['name' => 'Ivan']);
 		$this->repository->create(['name' => 'Ivan2']);
-		$filterable = \Isneezy\Celeiro\Filterable\Filterable::builder()->toFilterable();
+		$filterable = FilterableFactory::fromRequest()->make();
 
 		$model = $this->repository->findManyBy('name','Ivan', $filterable);
 		self::assertNotNull($model->count(), 2);

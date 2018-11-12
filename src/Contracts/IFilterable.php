@@ -47,6 +47,15 @@ interface IFilterable {
 	 */
 	public function getSearchParam();
 
+	/**
+	 * Returns param defined in key or default if it does not extist and all params array if $key is null
+	 * @param $key
+	 * @param $default
+	 *
+	 * @return mixed
+	 */
+	public function get($key = null, $default = null);
+
 //	/**
 //	 * Returns filters for the query
 //	 * @return Filters

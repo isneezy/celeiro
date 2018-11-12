@@ -6,6 +6,7 @@ namespace Isneezy\Celeiro\Tests;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Isneezy\Celeiro\Filterable\Filterable;
+use Isneezy\Celeiro\Filterable\FilterableFactory;
 use Isneezy\Celeiro\Repository;
 
 class RepositoryTest extends TestCase {
@@ -50,7 +51,7 @@ class RepositoryTest extends TestCase {
 	 */
 	public function test_it_can_execute_query() {
 		$repository = $this->makeRepository();
-		$filterable = Filterable::builder()->toFilterable();
+		$filterable = FilterableFactory::fromRequest()->make();
 		$method = $this->reflection->getMethod('doQuery');
 		$method->setAccessible(true);
 		$result = $method->invokeArgs($repository, [$repository->newQuery(), $filterable]);

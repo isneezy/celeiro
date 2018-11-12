@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider as Service;
 use Isneezy\Celeiro\Contracts\IFilterable as FilterableContract;
 use Isneezy\Celeiro\Filterable\Filterable;
+use Isneezy\Celeiro\Filterable\FilterableFactory;
 
 class CeleiroServiceProvider extends Service {
 
@@ -18,13 +19,7 @@ class CeleiroServiceProvider extends Service {
 	public function register() {
 		$this->app->bind( FilterableContract::class, function () {
 			$request = Container::getInstance()->make( Request::class );
-
-			return Filterable::builder()
-			                 ->paged( ! $request->has( 'unpaged') )
-			                 ->page( $request->get( 'page', 1 ) )
-			                 ->limit($request->get('limit', config('celeiro.limit')) )
-			                 ->search( $request->get( 'q', '' ) )
-			                 ->toFilterable();
+			return FilterableFactory::fromRequest($request)->make();
 		} );
 	}
 }

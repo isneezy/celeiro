@@ -10,11 +10,11 @@ class Filterable implements FilterableContract {
 
 	protected $params = [];
 
-	public function setParam($name, $value) {
-		$this->params[$name] = $value;
+	public function setParam( $name, $value ) {
+		$this->params[ $name ] = $value;
 	}
 
-	public function setParams (array $params) {
+	public function setParams( array $params ) {
 		$this->params = $params;
 	}
 
@@ -23,7 +23,7 @@ class Filterable implements FilterableContract {
 	 * @return int
 	 */
 	public function getPage() {
-		return Arr::get($this->params, 'page', 1);
+		return Arr::get( $this->params, 'page', 1 );
 	}
 
 	/**
@@ -31,7 +31,7 @@ class Filterable implements FilterableContract {
 	 * @return int
 	 */
 	public function getPageSize() {
-		return Arr::get($this->params, 'limit', 10);
+		return Arr::get( $this->params, 'limit', 10 );
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Filterable implements FilterableContract {
 	 * @return bool
 	 */
 	public function isPaged() {
-		return Arr::get($this->params, 'paged', true) ? true : false;
+		return Arr::get( $this->params, 'paged', true ) ? true : false;
 	}
 
 	/**
@@ -63,15 +63,29 @@ class Filterable implements FilterableContract {
 	 * @return string
 	 */
 	public function getSearchParam() {
-		return Arr::get($this->params, 'q', '');
+		return Arr::get( $this->params, 'q', '' );
 	}
 
 	/**
-	 * creates a Filterable builder
+	 * Returns param defined in key or default if it does not extist and all params array if $key is null
 	 *
-	 * @return Builder
+	 * @param $key
+	 * @param $default
+	 *
+	 * @return mixed
 	 */
-	public static function builder() {
-		return new Builder();
+	public function get( $key = null, $default = null ) {
+		if (empty($key)) {
+			return $this->params;
+		}
+		return Arr::get($this->params, $key, $default);
 	}
+
+
+	/*
+	 * ->paged( ! $request->has( 'unpaged') )
+			                 ->page( $request->get( 'page', 1 ) )
+			                 ->limit($request->get('limit', config('celeiro.limit')) )
+			                 ->search( $request->get( 'q', '' ) )
+	 */
 }
