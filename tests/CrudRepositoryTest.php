@@ -20,12 +20,12 @@ class CrudRepositoryTest extends TestCase {
 		$modelClass->setValue($this->repository, TestModel::class);
 	}
 
-	public function test_create () {
+	public function test_it_can_create () {
 		self::assertInstanceOf(TestModel::class, $this->repository->create(['name' => 'John Doe']));
 		$this->assertDatabaseHas('tests', ['name' => 'John Doe']);
 	}
 
-	public function test_findAll () {
+	public function test_it_can_find_all () {
 		$this->repository->create(['name' => 'John Doe']);
 		$this->repository->create(['name' => 'John HERN']);
 		$filterable = \Isneezy\Celeiro\Filterable\Filterable::builder()->paged(false)->limit(0)->toFilterable();
@@ -33,7 +33,7 @@ class CrudRepositoryTest extends TestCase {
 		self::assertEquals(2, $res->count());
 	}
 
-	public function test_findById () {
+	public function test_it_can_find_by_id () {
 		TestModel::insert([
 			['name' => 'Ivan'],
 			['name' => 'Adelino'],

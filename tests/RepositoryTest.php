@@ -5,6 +5,7 @@ namespace Isneezy\Celeiro\Tests;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Isneezy\Celeiro\Filterable\Filterable;
 use Isneezy\Celeiro\Repository;
 
 class RepositoryTest extends TestCase {
@@ -36,7 +37,7 @@ class RepositoryTest extends TestCase {
 	/**
 	 * @throws \ReflectionException
 	 */
-	public function test_newQuery () {
+	public function test_it_can_create_query () {
 		$repository = $this->makeRepository();
 		$query = $repository->newQuery();
 		self::assertInstanceOf(Builder::class, $query);
@@ -46,9 +47,9 @@ class RepositoryTest extends TestCase {
 	/**
 	 * @throws \ReflectionException
 	 */
-	public function test_doQuery() {
+	public function test_it_can_execute_query() {
 		$repository = $this->makeRepository();
-		$filterable = \Isneezy\Celeiro\Filterable\Filterable::builder()->toFilterable();
+		$filterable = Filterable::builder()->toFilterable();
 		$method = $this->reflection->getMethod('doQuery');
 		$method->setAccessible(true);
 		$result = $method->invokeArgs($repository, [$repository->newQuery(), $filterable]);
