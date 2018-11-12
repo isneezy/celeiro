@@ -42,7 +42,7 @@ class FilterableFactory {
 	 * @return FilterableFactory
 	 */
 	public function page( $page ) {
-		$this->params['page'] = $page;
+		$this->params[config('celeiro.params.page')] = $page;
 
 		return $this;
 	}
@@ -53,7 +53,7 @@ class FilterableFactory {
 	 * @return $this
 	 */
 	public function limit( $limit ) {
-		$this->params['limit'] = $limit;
+		$this->params[config('celeiro.params.limit')] = $limit;
 
 		return $this;
 	}
@@ -64,7 +64,7 @@ class FilterableFactory {
 	 * @return FilterableFactory
 	 */
 	public function paged( $paged ) {
-		$this->params['paged'] = $paged;
+		$this->params[config('celeiro.params.paged')] = $paged;
 
 		return $this;
 	}
@@ -75,7 +75,7 @@ class FilterableFactory {
 	 * @return FilterableFactory
 	 */
 	public function search( $q ) {
-		$this->params['q'] = $q;
+		$this->params[config('celeiro.params.search')] = $q;
 
 		return $this;
 	}
@@ -87,14 +87,15 @@ class FilterableFactory {
 	 * @return FilterableFactory
 	 */
 	public function include ($include, $override = false) {
-		$oldInclude = explode(',', Arr::get($this->params, 'include', null));
+		$paramKey = config('celeiro.params.include');
+		$oldInclude = explode(',', Arr::get($this->params, $paramKey, null));
 		if (is_string($include)) {
 			$include = explode(',', $include);
 		}
 		if (!$override) {
 			$include = array_merge($oldInclude, $include);
 		}
-		$this->params['include'] = implode(',', array_filter(array_unique($include)));
+		$this->params[$paramKey] = implode(',', array_filter(array_unique($include)));
 		return $this;
 	}
 
@@ -106,7 +107,7 @@ class FilterableFactory {
 	}
 
 	public function order( $column, $direction ) {
-		$this->params['order'] = "$column,$direction";
+		$this->params[config('celeiro.params.order')] = "$column,$direction";
 		return $this;
 	}
 }

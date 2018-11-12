@@ -23,7 +23,7 @@ class Filterable implements FilterableContract {
 	 * @return int
 	 */
 	public function getPage() {
-		return Arr::get( $this->params, 'page', 1 );
+		return Arr::get( $this->params, config('celeiro.params.page'), 1 );
 	}
 
 	/**
@@ -31,7 +31,7 @@ class Filterable implements FilterableContract {
 	 * @return int
 	 */
 	public function getPageSize() {
-		return Arr::get( $this->params, 'limit', 10 );
+		return Arr::get( $this->params, config('celeiro.params.limit'), 10 );
 	}
 
 	/**
@@ -47,7 +47,7 @@ class Filterable implements FilterableContract {
 	 * @return bool
 	 */
 	public function isPaged() {
-		return Arr::get( $this->params, 'paged', true ) ? true : false;
+		return Arr::get( $this->params, config('celeiro.params.paged'), true ) ? true : false;
 	}
 
 	/**
@@ -63,7 +63,7 @@ class Filterable implements FilterableContract {
 	 * @return string
 	 */
 	public function getSearchParam() {
-		return Arr::get( $this->params, 'q', '' );
+		return Arr::get( $this->params, config('celeiro.params.search'), '' );
 	}
 
 	/**
@@ -93,13 +93,13 @@ class Filterable implements FilterableContract {
 	 * @return array
 	 */
 	public function getInclude() {
-		return array_filter(explode(',', array_get($this->params, 'include')));
+		return array_filter(explode(',', array_get($this->params, config('celeiro.params.include'))));
 	}
 
 	/**
 	 * @return array
 	 */
 	public function getOrder() {
-		return explode(',', Arr::get($this->params, 'order'));
+		return explode(',', Arr::get($this->params, config('celeiro.params.order')));
 	}
 }
