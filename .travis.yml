@@ -2,6 +2,14 @@ language: php
 php:
   - '7.1'
   - '7.2'
+env:
+  - DB: 'sqlite'
+  - DB: 'mysql'
+  - DB: 'pgsql'
+services:
+  - mysql
+  - postgresql
 before_script:
   - composer install
-script: phpunit
+script:
+  - .travis/${DB}/test.sh
