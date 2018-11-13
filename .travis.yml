@@ -4,6 +4,8 @@ php:
   - '7.2'
 services:
   - mysql
-# before_script:
-#  - composer install
+before_install:
+  - mysql -e 'create database test;'
+before_script:
+  - composer install
 script: mysql -e 'show databases;'
