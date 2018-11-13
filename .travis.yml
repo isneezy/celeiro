@@ -7,8 +7,6 @@ env:
   - DB: 'mysql'
 services:
   - mysql
-before_install:
-  - mysql -e 'create database test;'
 before_script:
   - composer install
 script:
