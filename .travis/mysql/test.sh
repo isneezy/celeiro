@@ -1,3 +1,3 @@
 #!/usr/bin/env bash
 mysql -e 'create database test;'
-phpunit --config ./phpunit.xml
+phpunit --config .travis/mysql/phpunit.xml
