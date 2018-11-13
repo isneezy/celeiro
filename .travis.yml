@@ -2,6 +2,8 @@ language: php
 php:
   - '7.1'
   - '7.2'
-before_script:
-  - composer install
-script: phpunit
+services:
+  - mysql
+# before_script:
+#  - composer install
+script: mysql -e 'show databases;'
