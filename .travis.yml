@@ -5,8 +5,10 @@ php:
 env:
   - DB: 'sqlite'
   - DB: 'mysql'
+  - DB: 'pgsql'
 services:
   - mysql
+  - postgresql
 before_script:
   - composer install
 script:
