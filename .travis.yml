@@ -3,6 +3,7 @@ php:
   - '7.1'
 #  - '7.2'
 env:
+  - DB: 'sqlite'
   - DB: 'mysql'
 services:
   - mysql
@@ -11,4 +12,4 @@ before_install:
 before_script:
   - composer install
 script:
-  - .travis/{DB}/test.sh
+  - .travis/${DB}/test.sh
