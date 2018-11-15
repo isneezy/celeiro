@@ -63,7 +63,7 @@ abstract class Repository implements IRepository {
 		return $query->get();
 	}
 
-	protected function loadRelations(Builder $query, $filterable) {
+	protected function loadRelations(Builder $query, IFilterable $filterable) {
 		return $query->with($filterable->getInclude());
 	}
 
