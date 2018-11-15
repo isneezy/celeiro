@@ -49,7 +49,6 @@ class RepositoryTest extends TestCase {
 		$repository = $this->makeRepository();
 		$query = $repository->newQuery();
 		self::assertInstanceOf(Builder::class, $query);
-		self::assertEquals('select * from "tests"', $query->toSql());
 	}
 
 	/**

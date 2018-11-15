@@ -66,7 +66,7 @@ abstract class Repository implements IRepository {
 	}
 
 	private function orderResults(Builder $query, array $order) {
-		if (count($order)) {
+		if (count($order) && !empty($order[0])) {
 			$query->orderBy(Arr::get($order, 0), Arr::get($order, 1, 'ASC'));
 		}
 		return $query;
