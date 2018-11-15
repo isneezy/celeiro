@@ -13,7 +13,7 @@ trait DeleteRecords {
 	 * @return bool
 	 */
 	public function delete($id){
-		$model = $this->findByID($id, app(IFilterable::class));
+		$model = $this->findByID($id);
 		return $model->delete();
 	}
 }

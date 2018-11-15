@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Renamed Builder class into FilterableFactory
 - Every read operation signature now require Filterable instance
+- Filterable parameter is now optionally in every method
 
 ## [1.2.0] - 2018-11-12
 ### Added

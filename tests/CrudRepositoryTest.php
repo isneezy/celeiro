@@ -27,8 +27,7 @@ class CrudRepositoryTest extends TestCase {
 	public function test_it_can_find_all () {
 		$this->repository->create(['name' => 'John Doe']);
 		$this->repository->create(['name' => 'John HERN']);
-		$filterable = FilterableFactory::fromRequest()->paged(false)->limit(0)->make();
-		$res = $this->repository->findAll($filterable);
+		$res = $this->repository->findAll();
 		self::assertEquals(2, $res->count());
 	}
 
@@ -38,7 +37,7 @@ class CrudRepositoryTest extends TestCase {
 			['name' => 'Adelino'],
 			['name' => 'Edgencio'],
 		]);
-		self::assertEquals('Ivan', $this->repository->findByID(1,  FilterableFactory::fromRequest()->make())->name);
+		self::assertEquals('Ivan', $this->repository->findByID(1)->name);
 	}
 
 	public function test_it_can_update () {
@@ -56,11 +55,11 @@ class CrudRepositoryTest extends TestCase {
 	public function test_it_can_find_one_by_any_column () {
 		$this->repository->create(['name' => 'Ivan']);
 		$this->repository->create(['name' => 'Ivan2']);
-		$model = $this->repository->findBy('name', 'Ivan', FilterableFactory::fromRequest()->make());
+		$model = $this->repository->findBy('name', 'Ivan');
 		self::assertNotNull($model);
 		self::assertEquals($model->getAttribute('name'), 'Ivan');
 
-		$model = $this->repository->findBy(['name' => 'Ivan'],null, FilterableFactory::fromRequest()->make());
+		$model = $this->repository->findBy(['name' => 'Ivan']);
 		self::assertNotNull($model);
 		self::assertEquals($model->getAttribute('name'), 'Ivan');
 	}
@@ -69,12 +68,11 @@ class CrudRepositoryTest extends TestCase {
 		$this->repository->create(['name' => 'Ivan']);
 		$this->repository->create(['name' => 'Ivan']);
 		$this->repository->create(['name' => 'Ivan2']);
-		$filterable = FilterableFactory::fromRequest()->make();
 
-		$model = $this->repository->findManyBy('name','Ivan', $filterable);
-		self::assertNotNull($model->count(), 2);
+		$model = $this->repository->findManyBy('name','Ivan');
+		self::assertEquals(2, $model->count());
 
-		$model = $this->repository->findManyBy(['name' => 'Ivan'], null, $filterable);
-		self::assertNotNull($model->count(), 2);
+		$model = $this->repository->findManyBy(['name' => 'Ivan2']);
+		self::assertEquals(1, $model->count());
 	}
 }

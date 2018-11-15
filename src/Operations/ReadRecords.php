@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Isneezy\Celeiro\Contracts\IFilterable;
 use Isneezy\Celeiro\Filterable\Filterable;
+use function Symfony\Component\Debug\Tests\testHeader;
 
 trait ReadRecords {
 	/**
@@ -14,7 +15,7 @@ trait ReadRecords {
 	 *
 	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|CrudRepository[]
 	 */
-	public function findAll(IFilterable $filterable) {
+	public function findAll(IFilterable $filterable = null) {
 		return $this->doQuery(null, $filterable);
 	}
 
@@ -27,28 +28,30 @@ trait ReadRecords {
 	 *
 	 * @return \Illuminate\Database\Eloquent\Collection|Model|null|static|static[]
 	 */
-	public function findByID($id, IFilterable $filterable) {
+	public function findByID($id, IFilterable $filterable = null) {
+		$column = ($this->factory())->getKeyName();
 		$query = $this->newQuery();
-		$query = $this->loadRelations($query, $filterable);
-		return $query->find($id);
+		$query->where($column, $id);
+		return $this->doQuery($query, $filterable, true);
 	}
 
 	/**
 	 * @param $column string | array
 	 * @param $value string | null
-	 * @param Filterable $filterable
+	 * @param IFilterable $filterable
 	 *
-	 * @return Model
+	 * @param bool $first
+	 *
+	 * @return Model | Collection | LengthAwarePaginator
 	 */
-	public function findBy($column, $value = null, Filterable $filterable) {
+	public function findBy($column, $value = null, IFilterable $filterable = null, $first = true) {
 		$query = $this->newQuery();
-		$query = $this->loadRelations($query, $filterable);
 		if (is_array($column)) {
 			$query->where($column);
 		} else {
 			$query->where($column, $value);
 		}
-		return $query->first();
+		return $this->doQuery($query, $filterable, $first);
 	}
 
 	/**
@@ -58,14 +61,7 @@ trait ReadRecords {
 	 *
 	 * @return Collection | LengthAwarePaginator
 	 */
-	public function findManyBy($column, $value = null, IFilterable $filterable) {
-		$query = $this->newQuery();
-		$query = $this->loadRelations($query, $filterable);
-		if (is_array($column)) {
-			$query->where($column);
-		} else {
-			$query->where($column, $value);
-		}
-		return $this->doQuery($query, $filterable);
+	public function findManyBy($column, $value = null, IFilterable $filterable = null) {
+		return $this->findBy($column, $value, $filterable, false);
 	}
 }

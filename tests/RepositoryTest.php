@@ -56,8 +56,7 @@ class RepositoryTest extends TestCase {
 	 */
 	public function test_it_can_execute_query() {
 		$repository = $this->makeRepository();
-		$filterable = FilterableFactory::fromRequest()->make();
-		$result = $this->doQuery->invokeArgs($repository, [$repository->newQuery(), $filterable]);
+		$result = $this->doQuery->invokeArgs($repository, [$repository->newQuery()]);
 		self::assertInstanceOf(LengthAwarePaginator::class, $result);
 	}
 

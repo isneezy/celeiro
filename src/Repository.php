@@ -35,7 +35,9 @@ abstract class Repository implements IRepository {
 	 * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Collection|\Illuminate\Support\Collection|static[]| Model
 	 */
 
-	protected function doQuery( $query, $filterable, $first = false ) {
+	protected function doQuery( $query, IFilterable $filterable = null, $first = false ) {
+		$filterable = $this->getFilterable($filterable);
+
 		if ( is_null( $query ) ) {
 			$query = $this->newQuery();
 		}
@@ -70,5 +72,14 @@ abstract class Repository implements IRepository {
 			$query->orderBy(Arr::get($order, 0), Arr::get($order, 1, 'ASC'));
 		}
 		return $query;
+	}
+
+	/**
+	 * @param IFilterable|null $filterable
+	 *
+	 * @return IFilterable|mixed
+	 */
+	public function getFilterable( IFilterable $filterable = null ) {
+		return !empty($filterable) ? $filterable : app()->make(IFilterable::class);
 	}
 }
