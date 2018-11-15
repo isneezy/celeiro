@@ -33,7 +33,7 @@ trait CreateRecords {
 	 *
 	 * @return Model
 	 */
-	public function factory( array $data ) {
+	public function factory( array $data = [] ) {
 		$model = $this->newQuery()->getModel()->newInstance();
 		$this->setModelData( $model, $data );
 
