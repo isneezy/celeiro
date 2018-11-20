@@ -23,7 +23,8 @@
   },
   "require-dev": {
     "illuminate/http": "~5",
-    "orchestra/testbench": "~3.0"
+    "orchestra/testbench": "~3.0",
+    "mockery/mockery": "^1.2"
   },
 
   "extra": {
